@@ -10,7 +10,8 @@ define tcpwrappers::entry(
   $except,
   $order,
 ) {
-  private('tcpwrappers::entry for module use only. Use allow or deny types')
+  assert_private(
+    'tcpwrappers::entry for module use only. Use allow or deny types')
 
   validate_bool($enable_ipv6)
   validate_re($action, '^(allow|deny)$')
