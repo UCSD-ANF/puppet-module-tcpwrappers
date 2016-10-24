@@ -15,6 +15,12 @@ class tcpwrappers (
   validate_bool($deny_by_default,$enable_hosts_deny,$enable_ipv6)
   validate_re($ensure, '^(ab|pre)sent$')
 
+  $manage_owner = 'root'
+  $manage_group = $::osfamily ? {
+    'FreeBSD' => 'wheel',
+    default   => 'root',
+  }
+
   if $enable_hosts_deny {
     $concat_target = ['/etc/hosts.allow','/etc/hosts.deny']
   } else {
@@ -37,10 +43,10 @@ class tcpwrappers (
   # Set up concat resource(s).
   concat { $concat_target :
     ensure => $ensure,
-    group  => 'root',
+    group  => $manage_group,
     mode   => '0644',
     order  => 'numeric',
-    owner  => 'root',
+    owner  => $manage_owner,
     warn   => true,
   }
 

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'tcpwrappers' do
+describe 'tcpwrappers', :type=>'class' do
 
 	platforms = [
     { :operatingsystem => 'Debian',
@@ -14,6 +14,9 @@ describe 'tcpwrappers' do
     },
     { :operatingsystem => 'Solaris',
       :osfamily        => 'Solaris',
+    },
+    { :operatingsystem => 'FreeBSD',
+      :osfamily        => 'FreeBSD',
     },
   ]
   shared_context 'install disabled' do
@@ -62,6 +65,10 @@ describe 'tcpwrappers' do
         it_behaves_like 'hosts.deny disabled'
       when 'RedHat' then
         it { should contain_package('tcp_wrappers') }
+        it_behaves_like 'hosts.deny disabled'
+      when 'FreeBSD' then
+        it { should contain_concat('/etc/hosts.allow').with_group('wheel') }
+        it_behaves_like 'install disabled'
         it_behaves_like 'hosts.deny disabled'
       else
         it_behaves_like 'install disabled'
