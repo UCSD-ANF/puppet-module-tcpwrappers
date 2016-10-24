@@ -17,6 +17,7 @@ hiera_puppet_version = ENV.key?('HIERA_PUPPET_VERSION') ? \
 
 ### Gem requirements
 gem 'rake'
+gem 'json_pure', '< 2.0'
 gem 'rspec', '< 3.0.0'
 gem 'facter', facter_version
 gem 'puppet', puppet_version
