@@ -10,7 +10,7 @@ describe 'tcpwrappers::allow', :type => 'define' do
   context 'with bad title' do
     let :title  do '192.168/16' end
     it 'should raise error due no params' do
-      expect { should compile }.to raise_error(Puppet::Error,/invalid spec:/)
+      should raise_error(Puppet::Error,/invalid spec:/)
     end
   end
 
