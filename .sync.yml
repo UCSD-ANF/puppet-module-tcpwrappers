@@ -1,3 +1,10 @@
+Gemfile:
+  optional:
+    ':development':
+      - gem: 'byebug'
+        version: '~> 11.1'
+spec/spec_helper.rb:
+  mock_with: ':rspec'
 spec/default_facts.yml:
   extra_facts:
     concat_basedir: /foo/bar/baz
