@@ -7,6 +7,12 @@ Manages _hosts.allow_ and _hosts.deny_.
 * Requires https://github.com/puppetlabs/puppetlabs-concat
 * Requires https://github.com/puppetlabs/puppetlabs-stdlib
 
+Tested on:
+* CentOS/RHEL 6 and 7
+* FreeBSD 12.1
+* Ubuntu 18+
+* Darwin 16+
+
 ## Usage
 
 ### `tcpwrappers`
@@ -72,7 +78,7 @@ Specifying multiple subnets can happen a couple different ways:
 
     tcpwrappers::allow { 'my fav subnets':
       comment => 'Need to allow favorite subnets to ALL',
-      client  => ['10.0.1.0/24','10.0.2.0/24'],
+      client  => ['10.0.1.0/24','10.0.2.0/24', 'taco.example.com', 'jerkface'],
     }
 
     tcpwrappers::allow { 'my fav subnets to sshd':
@@ -95,8 +101,9 @@ The following optional parameters are available:
 * `ensure`
     * Whether the entry should be 'present' or 'absent'.  Default 'present'.
 * `client`
-    * The client specification to be added.  May be a string or array or
-    strings. Each string must evaluate to a valid IPv4 or IPv6 subnet.
+    * The client specification to be added.  May be a string or array of
+    strings. Each string must evaluate to a valid IPv4 or IPv6 address, subnet,
+    or a hostname/FQDN.
     Default: '$name'.
 * `comment`
     * A comment to go above the entry. Default: none.
@@ -107,7 +114,7 @@ The following optional parameters are available:
     * Another client specification, acting as a filter for the first
     client specifiction. Default: none.
 * `order`
-    * The 3-number digit, signifying the order the line appears in the
+    * The 3-digit number (as a String), signifying the order the line appears in the
     file. Default is '100' for tcpwrappers::allow and '200' for
     tcpwrappers::deny.
 

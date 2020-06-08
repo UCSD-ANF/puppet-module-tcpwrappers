@@ -13,6 +13,10 @@ describe 'tcpwrappers::normalize_client' do
                       .and_raise_error(ArgumentError, %r{expects a .*, got Hash})
   end
 
+  it 'raises an error when client type is a nested array' do
+    is_expected.to run.with_params(['foo', 'bar', ['baz', 'qux'], 'nux'], false)
+                      .and_raise_error(ArgumentError)
+  end
   it 'passes a hostname through unchanged' do
     is_expected.to run.with_params('localhost', false)
                       .and_return('localhost')
