@@ -2,12 +2,8 @@ require 'ipaddr'
 
 # Convert argument into TCP Wrappers-friendly version
 Puppet::Functions.create_function(:'tcpwrappers::normalize_client') do
-  local_types do
-    type 'ClientOrClients = Variant[String[1], Array[ClientOrClients]]'
-  end
-
   dispatch :normalize_client do
-    param 'ClientOrClients', :clients
+    param 'Variant[String[1], Array[String[1]]]', :clients
     param 'Boolean', :allow_ipv6
   end
 
