@@ -1,12 +1,12 @@
 # Defined type to manage hosts.deny
 define tcpwrappers::deny(
-  $ensure      = 'present',
-  $client      = $name,
-  $comment     = undef,
-  $daemon      = 'ALL',
-  $enable_ipv6 = true,
-  $except      = undef,
-  $order       = '200',
+  Enum['present', 'absent'] $ensure      = 'present',
+  Data                      $client      = $name,
+  Optional[String]          $comment     = undef,
+  Tcpwrappers::Daemon       $daemon      = 'ALL',
+  Boolean                   $enable_ipv6 = true,
+  Optional[String]          $except      = undef,
+  Tcpwrappers::Order        $order       = '200',
 ) {
   tcpwrappers::entry { $name :
     ensure      => $ensure,

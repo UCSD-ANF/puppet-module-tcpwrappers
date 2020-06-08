@@ -7,14 +7,11 @@
 # want all entries in /etc/hosts.allow to be the default behavior. See
 # `man 5 hosts_options` on your OS for details.
 class tcpwrappers (
-  $ensure            = 'present',
-  $deny_by_default   = true,
-  $enable_hosts_deny = false,
-  $enable_ipv6       = true,
+  Enum['present', 'absent'] $ensure            = 'present',
+  Boolean                   $deny_by_default   = true,
+  Boolean                   $enable_hosts_deny = false,
+  Boolean                   $enable_ipv6       = true,
 ) {
-  validate_bool($deny_by_default,$enable_hosts_deny,$enable_ipv6)
-  validate_re($ensure, '^(ab|pre)sent$')
-
   $manage_owner = 'root'
   $manage_group = $::osfamily ? {
     'FreeBSD' => 'wheel',

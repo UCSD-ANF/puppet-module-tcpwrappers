@@ -1,12 +1,12 @@
 # Defined type to manage hosts.allow
 define tcpwrappers::allow(
-  $ensure      = 'present',
-  $client      = $name,
-  $comment     = undef,
-  $daemon      = 'ALL',
-  $enable_ipv6 = true,
-  $except      = undef,
-  $order       = '100',
+  Enum['present', 'absent'] $ensure      = 'present',
+  Data                      $client      = $name,
+  Optional[String]          $comment     = undef,
+  Tcpwrappers::Daemon       $daemon      = 'ALL',
+  Boolean                   $enable_ipv6 = true,
+  Optional[String]          $except      = undef,
+  Tcpwrappers::Order        $order       = '100',
 ) {
   tcpwrappers::entry { $name :
     ensure      => $ensure,
