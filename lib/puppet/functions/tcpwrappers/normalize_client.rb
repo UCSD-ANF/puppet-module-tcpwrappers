@@ -30,17 +30,17 @@ Puppet::Functions.create_function(:'tcpwrappers::normalize_client') do
       else
         # process IPv4.
         if ip.ipv4?
-          masklen = client.split('/')[1] || 32
+          masklen = ip.prefix()
           netmask = IPAddr.new('255.255.255.255').mask(masklen)
 
-          v = case netmask.to_i
-              when 4_278_190_080 # /8
+          v = case masklen
+              when 8 # /8
                 ip.to_s.split('.').slice(0, 1).join('.') + '.'
-              when 4_294_901_760 # /16
+              when 16 # /16
                 ip.to_s.split('.').slice(0, 2).join('.') + '.'
-              when 4_294_967_040 # /24
+              when 24 # /24
                 ip.to_s.split('.').slice(0, 3).join('.') + '.'
-              when 4_294_967_295 # /32
+              when 32 # /32
                 ip.to_s
               else # Some other valid IPv4 IP/netmask.
                 "#{ip}/#{netmask}"
