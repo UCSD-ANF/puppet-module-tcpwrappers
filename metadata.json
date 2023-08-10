@@ -1,10 +1,10 @@
 {
   "name": "ucsdanf-tcpwrappers",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "author": "UCSD ANF",
-  "summary": "",
+  "summary": "Manage tcpwrappers - hosts.allow and hosts.deny",
   "license": "BSD-2-Clause",
-  "source": "",
+  "source": "https://github.com/UCSD-ANF/puppet-module-tcpwrappers",
   "dependencies": [
     {
       "name": "puppetlabs/stdlib",
