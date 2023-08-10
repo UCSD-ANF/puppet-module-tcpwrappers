@@ -1,11 +1,15 @@
 # Initialization class for tcpwrappers module.
 #
-# NOTE: Almost any modern version of tcpd can accept an ACL option at
-# the end of the line, e.g. ': ALLOW' or ': DENY'. In addition to
-# making debugging more obvious by containing all settings in a single
-# file, BSD kernels notably list /etc/hosts.deny as deprecated. So, we
-# want all entries in /etc/hosts.allow to be the default behavior. See
-# `man 5 hosts_options` on your OS for details.
+# @param ensure - if absent, hosts.allow and hosts.deny are emptied, and packages are removed.
+# @param deny_by_default - if true, insert an ALL:ALL DENY entry
+# @param enable_hosts_deny - defaults to false.
+#   NOTE: Almost any modern version of tcpd can accept an ACL option at
+#   the end of the line, e.g. ': ALLOW' or ': DENY'. In addition to
+#   making debugging more obvious by containing all settings in a single
+#   file, BSD kernels notably list /etc/hosts.deny as deprecated. So, we
+#   want all entries in /etc/hosts.allow to be the default behavior. See
+#   `man 5 hosts_options` on your OS for details.
+# @param enable_ipv6 - defaults to true. Some platforms don't support ipv6.
 class tcpwrappers (
   Enum['present', 'absent'] $ensure            = 'present',
   Boolean                   $deny_by_default   = true,

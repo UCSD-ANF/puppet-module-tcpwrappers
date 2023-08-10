@@ -1,12 +1,13 @@
 # A defined type to manage entries in hosts.{allow,deny}.
 # Should only be called by either tcpwrappers::allow or tcpwrappers::deny.
+# @api private
 define tcpwrappers::entry (
   Enum['present', 'absent'] $ensure,
   Enum['allow', 'deny']     $action,
   Data                      $client,
   Tcpwrappers::Daemon       $daemon,
   Boolean                   $enable_ipv6,
-  Optional[String]          $except,
+  Optional[String]          $except      = undef,
   Tcpwrappers::Order        $order,
   Optional[String]          $comment     = undef,
 ) {
