@@ -1,6 +1,10 @@
 fixtures:
-  repositories:
-    concat:   https://github.com/ripienaar/puppet-concat.git
-    stdlib:   https://github.com/puppetlabs/puppetlabs-stdlib.git
+  forge_modules:
+    concat:
+      repo: "puppetlabs/concat"
+      ref: "7.2.0"
+    stdlib:
+      repo: "puppetlabs/stdlib"
+      ref: "8.2.0"
   symlinks:
     tcpwrappers: "#{source_dir}"
