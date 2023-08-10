@@ -13,7 +13,7 @@ class tcpwrappers (
   Boolean                   $enable_ipv6       = true,
 ) {
   $manage_owner = 'root'
-  $manage_group = $::osfamily ? {
+  $manage_group = $facts['os']['family'] ? {
     'FreeBSD' => 'wheel',
     default   => 'root',
   }
@@ -28,14 +28,14 @@ class tcpwrappers (
     }
   }
 
-  $tcpd_name = $::osfamily ? {
+  $tcpd_name = $facts['os']['family'] ? {
     'Debian' => 'tcpd',
     'RedHat' => 'tcp_wrappers',
     default  => undef,
   }
 
   Tcpwrappers::Allow { enable_ipv6 => $enable_ipv6 }
-  Tcpwrappers::Deny  { enable_ipv6 => $enable_ipv6 }
+  Tcpwrappers::Deny { enable_ipv6 => $enable_ipv6 }
 
   # Set up concat resource(s).
   concat { $concat_target :

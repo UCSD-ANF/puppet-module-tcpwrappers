@@ -1,6 +1,6 @@
 # A defined type to manage entries in hosts.{allow,deny}.
 # Should only be called by either tcpwrappers::allow or tcpwrappers::deny.
-define tcpwrappers::entry(
+define tcpwrappers::entry (
   Enum['present', 'absent'] $ensure,
   Enum['allow', 'deny']     $action,
   Data                      $client,
@@ -11,7 +11,7 @@ define tcpwrappers::entry(
   Optional[String]          $comment     = undef,
 ) {
   assert_private(
-    'tcpwrappers::entry for module use only. Use allow or deny types')
+  'tcpwrappers::entry for module use only. Use allow or deny types')
 
   include tcpwrappers
   $enable_hosts_deny = $tcpwrappers::enable_hosts_deny
@@ -27,10 +27,10 @@ define tcpwrappers::entry(
     false => '/etc/hosts.allow',
   }
   $key = regsubst(downcase(join([
-    'tcpd',
-    $action,
-    $daemon,
-    $name,
+          'tcpd',
+          $action,
+          $daemon,
+          $name,
   ],' ')),'\W+','_','G')
 
   # Concat temp filename based on $key.

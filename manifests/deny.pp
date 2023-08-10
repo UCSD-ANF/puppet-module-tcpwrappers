@@ -1,5 +1,5 @@
 # Defined type to manage hosts.deny
-define tcpwrappers::deny(
+define tcpwrappers::deny (
   Enum['present', 'absent'] $ensure      = 'present',
   Data                      $client      = $name,
   Optional[String]          $comment     = undef,

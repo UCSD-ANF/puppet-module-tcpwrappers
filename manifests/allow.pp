@@ -1,5 +1,5 @@
 # Defined type to manage hosts.allow
-define tcpwrappers::allow(
+define tcpwrappers::allow (
   Enum['present', 'absent'] $ensure      = 'present',
   Data                      $client      = $name,
   Optional[String]          $comment     = undef,
