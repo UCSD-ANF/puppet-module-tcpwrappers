@@ -1,6 +1,6 @@
 {
   "name": "ucsdanf-tcpwrappers",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "author": "UCSD ANF",
   "summary": "Manage tcpwrappers - hosts.allow and hosts.deny",
   "license": "BSD-2-Clause",
