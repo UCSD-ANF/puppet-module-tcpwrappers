@@ -51,3 +51,35 @@ parallel_spec-Ruby 2.7.2-Puppet ~> 7:
   variables:
     PUPPET_GEM_VERSION: '~> 7'
 
+validate lint check rubocop-Ruby 3.1.0-Puppet 7.34.0:
+  stage: syntax
+  image: ruby:3.1.0
+  script:
+    - bundle exec rake validate lint check rubocop
+  variables:
+    PUPPET_GEM_VERSION: '7.34.0'
+
+parallel_spec-Ruby 3.1.0-Puppet 7.34.0:
+  stage: unit
+  image: ruby:3.1.0
+  script:
+    - bundle exec rake parallel_spec
+  variables:
+    PUPPET_GEM_VERSION: '7.34.0'
+
+validate lint check rubocop-Ruby 3.2.0-Puppet ~> 8:
+  stage: syntax
+  image: ruby:3.2.0
+  script:
+    - bundle exec rake validate lint check rubocop
+  variables:
+    PUPPET_GEM_VERSION: '~> 8'
+
+parallel_spec-Ruby 3.2.0-Puppet ~> 8:
+  stage: unit
+  image: ruby:3.2.0
+  script:
+    - bundle exec rake parallel_spec
+  variables:
+    PUPPET_GEM_VERSION: '~> 8'
+

@@ -17,15 +17,23 @@ init:
 environment:
   matrix:
     -
-      RUBY_VERSION: 25-x64
+      RUBY_VERSION: 27-x64
       CHECK: validate lint check rubocop
     -
       PUPPET_GEM_VERSION: ~> 6.0
       RUBY_VERSION: 25
       CHECK: parallel_spec
     -
-      PUPPET_GEM_VERSION: ~> 6.0
-      RUBY_VERSION: 25-x64
+      PUPPET_GEM_VERSION: ~> 7.0
+      RUBY_VERSION: 27
+      CHECK: parallel_spec
+    -
+      PUPPET_GEM_VERSION: 7.34.0
+      RUBY_VERSION: 31
+      CHECK: parallel_spec
+    -
+      PUPPET_GEM_VERSION: ~> 8.0
+      RUBY_VERSION: 32
       CHECK: parallel_spec
 matrix:
   fast_finish: true
@@ -33,7 +41,7 @@ install:
   - set PATH=C:\Ruby%RUBY_VERSION%\bin;%PATH%
   - bundle install --jobs 4 --retry 2 --without system_tests
   - type Gemfile.lock
-build: off
+build: false
 test_script:
   - bundle exec puppet -V
   - ruby -v

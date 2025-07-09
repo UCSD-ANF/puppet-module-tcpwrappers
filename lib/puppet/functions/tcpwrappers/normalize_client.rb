@@ -30,7 +30,7 @@ Puppet::Functions.create_function(:'tcpwrappers::normalize_client') do
       else
         # process IPv4.
         if ip.ipv4?
-          masklen = ip.prefix()
+          masklen = ip.prefix
           netmask = IPAddr.new('255.255.255.255').mask(masklen)
 
           v = case masklen

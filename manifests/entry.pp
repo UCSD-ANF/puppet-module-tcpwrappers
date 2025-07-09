@@ -7,8 +7,8 @@ define tcpwrappers::entry (
   Data                      $client,
   Tcpwrappers::Daemon       $daemon,
   Boolean                   $enable_ipv6,
-  Optional[String]          $except      = undef,
   Tcpwrappers::Order        $order,
+  Optional[String]          $except      = undef,
   Optional[String]          $comment     = undef,
 ) {
   assert_private(
@@ -16,7 +16,6 @@ define tcpwrappers::entry (
 
   include tcpwrappers
   $enable_hosts_deny = $tcpwrappers::enable_hosts_deny
-  validate_bool($enable_hosts_deny)
 
   $client_real = tcpwrappers::normalize_client($client,$enable_ipv6)
   $except_real = $except ? {
@@ -36,7 +35,9 @@ define tcpwrappers::entry (
 
   # Concat temp filename based on $key.
   # Most filesystems don't allow for >256 chars.
-  validate_slength($key,255)
+  if length($key) > 255 {
+    fail("Key length ${length($key)} exceeds maximum of 255 characters")
+  }
 
   if 'present' == $ensure {
     concat::fragment { $key :
