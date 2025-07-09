@@ -68,6 +68,67 @@ describe 'tcpwrappers::allow', type: 'define' do
         end
       end
     end
+
+    context 'with ensure => absent' do
+      let(:params) { { ensure: 'absent' } }
+
+      it { is_expected.to contain_tcpwrappers__entry('10.0.0.0/255.0.0.0').with_ensure('absent') }
+    end
+
+    context 'with IPv6 disabled' do
+      let(:params) { { enable_ipv6: false } }
+
+      it { is_expected.to contain_tcpwrappers__entry('10.0.0.0/255.0.0.0').with_enable_ipv6(false) }
+    end
+
+    context 'with simple hostname' do
+      let(:title) { 'webserver' }
+
+      it do
+        is_expected.to contain_concat__fragment('tcpd_allow_all_webserver').with(
+          order: '100',
+          target: '/etc/hosts.allow',
+          content: "ALL:webserver:ALLOW\n",
+        )
+      end
+    end
+
+    context 'with IPv6 address' do
+      let(:title) { '::1' }
+
+      it do
+        is_expected.to contain_concat__fragment('tcpd_allow_all_1').with(
+          order: '100',
+          target: '/etc/hosts.allow',
+          content: "ALL:[::1]:ALLOW\n",
+        )
+      end
+    end
+
+    context 'with keyword ALL (different title)' do
+      let(:title) { 'ALL_EXTERNAL' }
+      let(:params) { { client: 'ALL' } }
+
+      it do
+        is_expected.to contain_concat__fragment('tcpd_allow_all_all_external').with(
+          order: '100',
+          target: '/etc/hosts.allow',
+          content: "ALL:ALL:ALLOW\n",
+        )
+      end
+    end
+
+    context 'with specific daemon' do
+      let(:params) { { daemon: 'sshd' } }
+
+      it do
+        is_expected.to contain_concat__fragment('tcpd_allow_sshd_10_0_0_0_255_0_0_0').with(
+          order: '100',
+          target: '/etc/hosts.allow',
+          content: "sshd:10.:ALLOW\n",
+        )
+      end
+    end
   end
 
   on_supported_os.each do |os, facts|

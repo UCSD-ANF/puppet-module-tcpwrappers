@@ -62,6 +62,29 @@ describe 'tcpwrappers', type: 'class' do
 
       it_behaves_like 'hosts.deny enabled'
     end
+
+    context 'with ensure => absent' do
+      let(:params) { { ensure: 'absent' } }
+
+      it { is_expected.to contain_concat('/etc/hosts.allow').with_ensure('absent') }
+      it { is_expected.to contain_tcpwrappers__allow('localhost').with_ensure('absent') }
+      it { is_expected.to contain_tcpwrappers__deny('ALL').with_ensure('absent') }
+    end
+
+    context 'with deny_by_default => false and ensure => absent' do
+      let(:params) { { deny_by_default: false, ensure: 'absent' } }
+
+      it { is_expected.to contain_concat('/etc/hosts.allow').with_ensure('absent') }
+      it { is_expected.to contain_tcpwrappers__allow('localhost').with_ensure('absent') }
+      it { is_expected.not_to contain_tcpwrappers__deny('ALL') }
+    end
+
+    context 'with IPv6 disabled' do
+      let(:params) { { enable_ipv6: false } }
+
+      it { is_expected.to contain_tcpwrappers__allow('localhost').with_enable_ipv6(false) }
+      it { is_expected.to contain_tcpwrappers__deny('ALL').with_enable_ipv6(false) }
+    end
   end
 
   shared_examples_for 'Debian' do
