@@ -4,13 +4,13 @@
 
 Manages _hosts.allow_ and _hosts.deny_.
 
-* Requires [puppetlabs/concat](https://forge.puppet.com/puppetlabs/concat) (>= 6.0.0 < 9.0.0)
-* Requires [puppetlabs/stdlib](https://forge.puppet.com/puppetlabs/stdlib) (>= 6.0.0 < 10.0.0)
+* Requires [puppetlabs/concat](https://forge.puppet.com/puppetlabs/concat) (>= 7.0.0 < 10.0.0)
+* Requires [puppetlabs/stdlib](https://forge.puppet.com/puppetlabs/stdlib) (>= 8.0.0 < 11.0.0)
 
 ## Compatibility
 
-* **Puppet**: 6.21.0 to 8.x
-* **Ruby**: 2.5.7 to 3.2.x
+* **Puppet**: 7.0.0 to 8.x
+* **Ruby**: 2.7.0 to 3.2.x
 
 Tested on:
 * CentOS/RHEL 7, 8

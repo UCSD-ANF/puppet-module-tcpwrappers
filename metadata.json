@@ -1,6 +1,6 @@
 {
   "name": "ucsdanf-tcpwrappers",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "author": "UCSD ANF",
   "summary": "Manage tcpwrappers - hosts.allow and hosts.deny",
   "license": "BSD-2-Clause",
@@ -8,11 +8,11 @@
   "dependencies": [
     {
       "name": "puppetlabs/stdlib",
-      "version_requirement": ">= 6.0.0 < 10.0.0"
+      "version_requirement": ">= 8.0.0 < 11.0.0"
     },
     {
       "name": "puppetlabs/concat",
-      "version_requirement": ">= 6.0.0 < 9.0.0"
+      "version_requirement": ">= 7.0.0 < 10.0.0"
     }
   ],
   "operatingsystem_support": [
@@ -101,7 +101,7 @@
   "requirements": [
     {
       "name": "puppet",
-      "version_requirement": ">= 6.21.0 < 9.0.0"
+      "version_requirement": ">= 7.0.0 < 9.0.0"
     }
   ],
   "pdk-version": "3.4.0",

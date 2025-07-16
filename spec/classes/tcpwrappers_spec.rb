@@ -69,6 +69,8 @@ describe 'tcpwrappers', type: 'class' do
       it { is_expected.to contain_concat('/etc/hosts.allow').with_ensure('absent') }
       it { is_expected.to contain_tcpwrappers__allow('localhost').with_ensure('absent') }
       it { is_expected.to contain_tcpwrappers__deny('ALL').with_ensure('absent') }
+      it { is_expected.to contain_tcpwrappers__entry('localhost').with_ensure('absent') }
+      it { is_expected.to contain_tcpwrappers__entry('ALL').with_ensure('absent') }
     end
 
     context 'with deny_by_default => false and ensure => absent' do
@@ -77,6 +79,7 @@ describe 'tcpwrappers', type: 'class' do
       it { is_expected.to contain_concat('/etc/hosts.allow').with_ensure('absent') }
       it { is_expected.to contain_tcpwrappers__allow('localhost').with_ensure('absent') }
       it { is_expected.not_to contain_tcpwrappers__deny('ALL') }
+      it { is_expected.to contain_tcpwrappers__entry('localhost').with_ensure('absent') }
     end
 
     context 'with IPv6 disabled' do
@@ -84,6 +87,34 @@ describe 'tcpwrappers', type: 'class' do
 
       it { is_expected.to contain_tcpwrappers__allow('localhost').with_enable_ipv6(false) }
       it { is_expected.to contain_tcpwrappers__deny('ALL').with_enable_ipv6(false) }
+      it { is_expected.to contain_tcpwrappers__entry('localhost').with_enable_ipv6(false) }
+      it { is_expected.to contain_tcpwrappers__entry('ALL').with_enable_ipv6(false) }
+    end
+
+    context 'with all parameters customized' do
+      let(:params) do
+        {
+          ensure: 'present',
+          deny_by_default: false,
+          enable_hosts_deny: true,
+          enable_ipv6: false,
+        }
+      end
+
+      it { is_expected.to contain_concat('/etc/hosts.allow').with_ensure('present') }
+      it { is_expected.to contain_concat('/etc/hosts.deny').with_ensure('present') }
+      it { is_expected.to contain_tcpwrappers__allow('localhost').with_ensure('present') }
+      it { is_expected.to contain_tcpwrappers__allow('localhost').with_enable_ipv6(false) }
+      it { is_expected.not_to contain_tcpwrappers__deny('ALL') }
+      it { is_expected.not_to contain_file('/etc/hosts.deny').with_ensure('absent') }
+    end
+
+    context 'with hosts.deny enabled and IPv6 disabled' do
+      let(:params) { { enable_hosts_deny: true, enable_ipv6: false } }
+
+      it { is_expected.to contain_concat('/etc/hosts.deny') }
+      it { is_expected.to contain_tcpwrappers__entry('localhost').with_enable_ipv6(false) }
+      it { is_expected.to contain_tcpwrappers__entry('ALL').with_enable_ipv6(false) }
     end
   end
 
